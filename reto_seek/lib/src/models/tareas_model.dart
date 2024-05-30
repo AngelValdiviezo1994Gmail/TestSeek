@@ -7,12 +7,14 @@ class TareasModel {
       required this.codigo,
       required this.nombre,
       required this.descripcion,
+      required this.tareaCompleta
     });
 
     String id;
     String codigo;
     String nombre;
     String descripcion;
+    bool tareaCompleta;
 
     //factory TareasModel.fromJson(String str) => TareasModel.fromMap(json.decode(str));
 
@@ -22,6 +24,7 @@ class TareasModel {
       codigo: json['codigo'],
       nombre: json['nombre'],
       descripcion: json['descripcion'],
+      tareaCompleta: json['tareaCompleta']
     );
   }
 
@@ -32,7 +35,8 @@ class TareasModel {
         'id': id,
         'codigo': codigo,
         'nombre': nombre,
-        'descripcion': descripcion
+        'descripcion': descripcion,
+        'tareaCompleta': tareaCompleta
       };
     }
 
@@ -40,7 +44,8 @@ class TareasModel {
         id: json["id"] ?? '',
         codigo: json["codigo"] ?? '',
         nombre: json["nombre"] ?? '',
-        descripcion: json["descripcion"] ?? ''
+        descripcion: json["descripcion"] ?? '',
+        tareaCompleta: json["tareaCompleta"] ?? false
     );
 
     Map<String, dynamic> toMap() => {
@@ -48,5 +53,6 @@ class TareasModel {
         "codigo": codigo,
         "nombre": nombre,
         "descripcion": descripcion,
+        "tareaCompleta": tareaCompleta
     };
 }

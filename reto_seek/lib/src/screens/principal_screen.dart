@@ -98,9 +98,9 @@ class PrincipalScreenState extends State<PrincipalScreen> with SingleTickerProvi
                     
                           Container(
                             color: Colors.transparent,
-                            width: size.width * 0.7,
+                            width: size.width * 0.9,
                             height: size.height * 0.045,
-                            child: Text('Tareas', style: TextStyle(color: objColoresPrincipal.naranjaSeek, fontSize: 25),),
+                            child: AutoSizeText('Arrastre hacia izquierda o derecha cada elemento de la lista para realizar una acción', style: TextStyle(color: objColoresPrincipal.naranjaSeek, fontSize: 25),),
                           ),
                     
                           Container(
@@ -161,11 +161,15 @@ class PrincipalScreenState extends State<PrincipalScreen> with SingleTickerProvi
                                 itemCount: lstTareas.length,
                                 itemBuilder: (context, index) {
                                   return Slidable(                                    
-                                    key: const ValueKey(0), 
-                                    // The end action pane is the one at the right or the bottom side.
-                                    endActionPane: const ActionPane(
-                                      motion: ScrollMotion(),
+                                    key: const ValueKey(0),                                  
+                                    startActionPane: ActionPane(
+                                      motion: const ScrollMotion(),
+                                      //dismissible: DismissiblePane(onDismissed: () {}),
+                                  
+                                      // All actions are defined in the children parameter.
                                       children: [
+                                        // A SlidableAction can have an icon and/or a label.
+                                        /*
                                         SlidableAction(
                                           onPressed: doNothing,
                                           backgroundColor: Color(0xFFFE4A49),
@@ -177,9 +181,114 @@ class PrincipalScreenState extends State<PrincipalScreen> with SingleTickerProvi
                                           onPressed: doNothing,
                                           backgroundColor: Color(0xFF21B7CA),
                                           foregroundColor: Colors.white,
+                                          icon: Icons.share,
+                                          label: 'Editar',
+                                        ),
+                                        */
+                                        SlidableAction(
+                                          //onPressed: (_) => controller.close(),
+                                          onPressed: (context) async {
+                                            TareasModel objTareasModel  = TareasModel(
+                                              codigo: lstTareas[index].codigo,
+                                              descripcion: lstTareas[index].descripcion,
+                                              nombre: lstTareas[index].nombre,
+                                              id: lstTareas[index].id,
+                                              tareaCompleta: true
+                                            );
+                                            await TareasServices().actualizaTarea(objTareasModel);
+                                            Fluttertoast.showToast(
+                                              msg: 'Tarea completada exitosamente',
+                                              toastLength: Toast.LENGTH_LONG,
+                                              gravity: ToastGravity.TOP,
+                                              timeInSecForIosWeb: 5,
+                                              backgroundColor: Colors.green,
+                                              textColor: Colors.white,
+                                              fontSize: 45.0
+                                            );
+                                            Future.microtask(() => 
+                                              Navigator.of(context, rootNavigator: true).pushReplacement(
+                                                CupertinoPageRoute<bool>(
+                                                  fullscreenDialog: true,
+                                                  builder: (BuildContext context) => PrincipalScreen(),
+                                                ),
+                                              )
+                                            );
+                                          },
+                                          backgroundColor: const Color(0xFF0392CF),
+                                          foregroundColor: Colors.white,
+                                          icon: Icons.save,
+                                          label: 'Tarea Completada',
+                                        ),
+                                        
+                                        SlidableAction(
+                                          onPressed: (context) async {
+                                            TareasModel objTareasModel  = TareasModel(
+                                              codigo: lstTareas[index].codigo,
+                                              descripcion: lstTareas[index].descripcion,
+                                              nombre: lstTareas[index].nombre,
+                                              id: lstTareas[index].id,
+                                              tareaCompleta: lstTareas[index].tareaCompleta
+                                            );
+                                            Future.microtask(() => 
+                                              Navigator.of(context, rootNavigator: true).pushReplacement(
+                                                CupertinoPageRoute<bool>(
+                                                  fullscreenDialog: true,
+                                                  builder: (BuildContext context) => EditaTareaScreen(objTareasEditModelInp: objTareasModel,),
+                                                ),
+                                              )
+                                            );
+                                            //await TareasServices().actualizaTarea(objTareasModel);
+                                                      
+                                          },
+                                          backgroundColor: const Color(0xFF21B7CA),
+                                          foregroundColor: Colors.white,
                                           icon:  Icons.archive,
                                           label: 'Editar',
                                         ),
+                                      
+                                      ],
+                                    ),
+
+                                    
+                                  
+                                    // The end action pane is the one at the right or the bottom side.
+                                    endActionPane:  ActionPane(
+                                      dismissible: DismissiblePane(
+                                        onDismissed: () async {
+                                          await TareasServices().eliminaTarea(lstTareas[index].id);
+
+                                            Fluttertoast.showToast(
+                                              msg: 'Tarea eliminada exitosamente',
+                                              toastLength: Toast.LENGTH_LONG,
+                                              gravity: ToastGravity.TOP,
+                                              timeInSecForIosWeb: 5,
+                                              backgroundColor: Colors.green,
+                                              textColor: Colors.white,
+                                              fontSize: 45.0
+                                            );
+
+                                            Future.microtask(() => 
+                                              Navigator.of(context, rootNavigator: true).pushReplacement(
+                                                CupertinoPageRoute<bool>(
+                                                  fullscreenDialog: true,
+                                                  builder: (BuildContext context) => PrincipalScreen(),
+                                                ),
+                                              )
+                                            );
+                                        }
+                                      ),
+                                      motion: const ScrollMotion(),
+                                      children: [
+                                        SlidableAction(
+                                          onPressed: (context) async {
+                                            
+                                          },
+                                          backgroundColor: const Color(0xFFFE4A49),
+                                          foregroundColor: Colors.white,
+                                          icon: Icons.delete,
+                                          label: 'Eliminar',
+                                        ),
+                                        
                                       ],
                                     ),
                                   
@@ -193,7 +302,7 @@ class PrincipalScreenState extends State<PrincipalScreen> with SingleTickerProvi
                                                   color: const Color.fromARGB(255, 217, 217, 217)),
                                               borderRadius: const BorderRadius.all(Radius.circular(10))
                                             ),
-                                        child: Center(child: Text(lstTareas[index].descripcion))
+                                        child: Center(child: Text(lstTareas[index].nombre))
                                       )
                                     ),
                                   );

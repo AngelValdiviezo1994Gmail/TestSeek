@@ -27,7 +27,7 @@ class TareasServices extends ChangeNotifier {
       }
       
       return _lstTareasModel;
-    } on Exception catch (ex) {
+    } on Exception catch (_) {
       return [];
     }
   }
@@ -46,7 +46,7 @@ class TareasServices extends ChangeNotifier {
         _lstTareasModel = [];
         _lstTareasModel = lstTmp;
         
-        int contLst = _lstTareasModel.length + 1;
+        int contLst = int.parse(_lstTareasModel.lastOrNull?.id ?? '0') + 1;
         objTareasModel.id = contLst.toString();
 
         _lstTareasModel.add(objTareasModel);
@@ -97,6 +97,7 @@ class TareasServices extends ChangeNotifier {
             _lstTareasModel[i].descripcion = objTareasModel.descripcion;
             _lstTareasModel[i].codigo = objTareasModel.codigo;
             _lstTareasModel[i].nombre = objTareasModel.nombre;
+            _lstTareasModel[i].tareaCompleta = objTareasModel.tareaCompleta;
           }
         }
 

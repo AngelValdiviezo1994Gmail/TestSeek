@@ -313,7 +313,8 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                                     codigo: codigoTxt.text,
                                                     descripcion: descriTxt.text,
                                                     nombre: nombreTxt.text,
-                                                    id: '0'
+                                                    id: '0',
+                                                    tareaCompleta: false
                                                   );
 
                                                   await TareasServices().guardarTarea(objTareasModel);
@@ -355,19 +356,3 @@ bool validacionCamposVacios (String varPassWordConfirm, String varPassWord, Stri
   return esFormularioValido;
 }
       
-bool validacionNuevaClave(String password) {
-  bool esContraseniaValida = false;
-  final numericRegex = RegExp(r'[0-9]');
-  final mayusculaRegex = RegExp(r'[A-Z]');
-  final minusculaRegex = RegExp(r'[a-z]');
-  final caracterEspecialRegex = RegExp(r'[\u0021-\u002b\u003c-\u0040]');
-
-  if (password.isNotEmpty && numericRegex.hasMatch(password) && mayusculaRegex.hasMatch(password) && minusculaRegex.hasMatch(password) && caracterEspecialRegex.hasMatch(password)) {
-    esContraseniaValida = true;
-  } else {
-    esContraseniaValida = false;
-  }
-  
-  return esContraseniaValida;
-
-}
