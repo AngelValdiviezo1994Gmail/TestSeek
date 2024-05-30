@@ -14,7 +14,16 @@ class TareasModel {
     String nombre;
     String descripcion;
 
-    factory TareasModel.fromJson(String str) => TareasModel.fromMap(json.decode(str));
+    //factory TareasModel.fromJson(String str) => TareasModel.fromMap(json.decode(str));
+
+     factory TareasModel.fromJson(Map<String, dynamic> json) {
+    return TareasModel(
+      id: json['id'],
+      codigo: json['codigo'],
+      nombre: json['nombre'],
+      descripcion: json['descripcion'],
+    );
+  }
 
     String toJson() => json.encode(toMap());
 

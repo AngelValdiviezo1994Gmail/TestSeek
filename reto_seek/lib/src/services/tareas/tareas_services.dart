@@ -22,20 +22,19 @@ class TareasServices extends ChangeNotifier {
       if(lstTareasTmp != null) {
 
         List<dynamic> jsonList = jsonDecode(lstTareasTmp);
-
         List<TareasModel> lstTmp = jsonList.map((json) => TareasModel.fromJson(json)).toList();
-
         _lstTareasModel = lstTmp;
       }
       
       return _lstTareasModel;
-    } on Exception catch (_) {
+    } on Exception catch (ex) {
       return [];
     }
   }
 
-  Future<void> guardarTarea(TareasModel objTareasModel) async {
+  Future<String> guardarTarea(TareasModel objTareasModel) async {
     try {
+      String rsp = '';
       
       String? lstTareasTmp = await storage.read(key: 'lstTareas');
       
@@ -44,12 +43,28 @@ class TareasServices extends ChangeNotifier {
         List<dynamic> jsonList = jsonDecode(lstTareasTmp);
 
         List<TareasModel> lstTmp = jsonList.map((json) => TareasModel.fromJson(json)).toList();
-
+        _lstTareasModel = [];
         _lstTareasModel = lstTmp;
-        _lstTareasModel.add(objTareasModel);
         
+        int contLst = _lstTareasModel.length + 1;
+        objTareasModel.id = contLst.toString();
+
+        _lstTareasModel.add(objTareasModel);
 
         // Convertir la lista de objetos Persona a una lista de mapas (maps)
+        List<Map<String, dynamic>> tareasMap = _lstTareasModel.map((item) => item.toJsonList()).toList();
+
+        // Convertir la lista de mapas a JSON
+        String tareasJson = jsonEncode(tareasMap);
+        await storage.write(key: 'lstTareas', value: tareasJson);
+      } else {
+        List<TareasModel> lstTmp = [];
+        objTareasModel.id = '1';
+        lstTmp.add(objTareasModel);
+
+        _lstTareasModel = [];
+        _lstTareasModel = lstTmp;
+
         List<Map<String, dynamic>> tareasMap = _lstTareasModel.map((item) => item.toJsonList()).toList();
 
         // Convertir la lista de mapas a JSON
@@ -58,8 +73,9 @@ class TareasServices extends ChangeNotifier {
       }
       
       notifyListeners();
+      return rsp;
     } on Exception catch (_) {
-
+      return '';
     }
   }
 

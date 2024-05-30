@@ -12,7 +12,9 @@ import 'package:provider/provider.dart';
 import 'package:reto_seek/environments/environments.dart';
 import 'package:reto_seek/src/bloc/bloc.dart';
 import 'package:reto_seek/src/models/models.dart';
+import 'package:reto_seek/src/screens/screens.dart';
 import 'package:reto_seek/src/services/services.dart';
+import 'package:reto_seek/src/styles/styles.dart';
 import 'package:reto_seek/src/ui/ui.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 
@@ -57,17 +59,12 @@ class PrincipalScreenState extends State<PrincipalScreen> with SingleTickerProvi
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    String numIdentIngresado = '';
-
-    final objProvMarc = Provider.of<TareasServices>(context);
-
-    final posicionInicial = BlocProvider.of<ColorBloc>(context);
     
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          extendBody: true,
+          //extendBody: true,
           body: FutureBuilder(
             future: TareasServices().getTareas(),
               builder: (context, snapshot) {
@@ -87,161 +84,128 @@ class PrincipalScreenState extends State<PrincipalScreen> with SingleTickerProvi
                   List<TareasModel> lstTareas = snapshot.data as List<TareasModel>;
 
                   return Center(
-                child: Form(
-                  //key: objProvMarc.formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                              
-                        Container(
-                          color: Colors.transparent,
-                          width: size.width * 0.7,
-                          height: size.height * 0.01,
-                        ),
-                
-                        Container(
-                          color: Colors.transparent,
-                          width: size.width * 0.7,
-                          height: size.height * 0.02,
-                        ),
-                              
-                        Container(
-                          width: size.width * 0.96,
-                          height: size.height * 0.25,
-                          alignment: Alignment.center,
-                          child: ListView(
-                            
-                            children: [
-                              Slidable(
-                                
-                                // Specify a key if the Slidable is dismissible.
-                                key: const ValueKey(0),
-              
-                                // The start action pane is the one at the left or the top side.
-                                startActionPane: ActionPane(
-                                  // A motion is a widget used to control how the pane animates.
-                                  motion: const ScrollMotion(),
-              
-                                  // A pane can dismiss the Slidable.
-                                  dismissible: DismissiblePane(onDismissed: () {}),
-              
-                                  // All actions are defined in the children parameter.
-                                  children: const [
-                                    // A SlidableAction can have an icon and/or a label.
-                                    SlidableAction(
-                                      onPressed: doNothing,
-                                      backgroundColor: Color(0xFFFE4A49),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.delete,
-                                      label: 'Delete',
-                                    ),
-                                    SlidableAction(
-                                      onPressed: doNothing,
-                                      backgroundColor: Color(0xFF21B7CA),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.share,
-                                      label: 'Share',
-                                    ),
-                                  ],
-                                ),
-              
-                                // The end action pane is the one at the right or the bottom side.
-                                endActionPane:  ActionPane(
-                                  motion: const ScrollMotion(),
-                                  children: [
-                                    SlidableAction(
-                                      // An action can be bigger than the others.
-                                      flex: 2,
-                                      onPressed: (_) => controller.openEndActionPane(),
-                                      backgroundColor: const Color(0xFF7BC043),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.archive,
-                                      label: 'Archive',
-                                    ),
-                                    SlidableAction(
-                                      onPressed: (_) => controller.close(),
-                                      backgroundColor: const Color(0xFF0392CF),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.save,
-                                      label: 'Save',
-                                    ),
-                                  ],
-                                ),
-              
-                                // The child of the Slidable is what the user sees when the
-                                // component is not dragged.
-                                child: const ListTile(title: Text('Slide me')),
-                              ),
-                              Slidable(
-                                controller: controller,
-                                // Specify a key if the Slidable is dismissible.
-                                key: const ValueKey(1),
-              
-                                // The start action pane is the one at the left or the top side.
-                                startActionPane: const ActionPane(
-                                  // A motion is a widget used to control how the pane animates.
-                                  motion: ScrollMotion(),
-              
-                                  // All actions are defined in the children parameter.
-                                  children: [
-                                    // A SlidableAction can have an icon and/or a label.
-                                    SlidableAction(
-                                      onPressed: doNothing,
-                                      backgroundColor: Color(0xFFFE4A49),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.delete,
-                                      label: 'Delete',
-                                    ),
-                                    SlidableAction(
-                                      onPressed: doNothing,
-                                      backgroundColor: Color(0xFF21B7CA),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.share,
-                                      label: 'Share',
-                                    ),
-                                  ],
-                                ),
-              
-                                // The end action pane is the one at the right or the bottom side.
-                                endActionPane: ActionPane(
-                                  motion: const ScrollMotion(),
-                                  dismissible: DismissiblePane(onDismissed: () {}),
-                                  children: const [
-                                    SlidableAction(
-                                      // An action can be bigger than the others.
-                                      flex: 2,
-                                      onPressed: doNothing,
-                                      backgroundColor: Color(0xFF7BC043),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.archive,
-                                      label: 'Archive',
-                                    ),
-                                    SlidableAction(
-                                      onPressed: doNothing,
-                                      backgroundColor: Color(0xFF0392CF),
-                                      foregroundColor: Colors.white,
-                                      icon: Icons.save,
-                                      label: 'Save',
-                                    ),
-                                  ],
-                                ),
-              
-                                // The child of the Slidable is what the user sees when the
-                                // component is not dragged.
-                                child: const ListTile(title: Text('Slide me')),
-                              ),
-                            ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                    
+                          Container(
+                            color: Colors.transparent,
+                            width: size.width * 0.7,
+                            height: size.height * 0.02,
                           ),
+                    
+                          Container(
+                            color: Colors.transparent,
+                            width: size.width * 0.7,
+                            height: size.height * 0.045,
+                            child: Text('Tareas', style: TextStyle(color: objColoresPrincipal.naranjaSeek, fontSize: 25),),
+                          ),
+                    
+                          Container(
+                            color: Colors.transparent,
+                            width: size.width * 0.7,
+                            height: size.height * 0.02,
+                          ),
+                                
+                          Container(
+                            color: Colors.transparent,
+                            width: size.width * 0.55,
+                            height: size.height * 0.06,
+                            child:   ElevatedButton(
+                          onPressed: onPressedAgregar,
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                            ),
+                            padding:
+                                MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 8)),
+                            backgroundColor: MaterialStateProperty.all(Style.buttonColor),
+                          ),
+                          child: const Text(
+                                  'Agregar',
+                                  style: TextStyle(
+                                    fontFamily: 'Nunito',
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
-                        
-                      ],
+                      
+                          ),
+                                      
+                          Container(
+                            color: Colors.transparent,
+                            width: size.width * 0.7,
+                            height: size.height * 0.02,
+                          ),
+                                      
+                          if(lstTareas.isEmpty)
+                          Container(
+                            color: Colors.transparent,
+                            width: size.width * 0.7,
+                            height: size.height * 0.03,
+                            child: const Text('No existen tareas registradas'),
+                          ),
+                                
+                          if(lstTareas.isNotEmpty)
+                          Container(
+                            width: size.width * 0.96,
+                            height: size.height * 0.85,
+                            alignment: Alignment.center,
+                            color: Colors.transparent,
+                            child: Center(
+                              child: ListView.builder(
+                                itemCount: lstTareas.length,
+                                itemBuilder: (context, index) {
+                                  return Slidable(                                    
+                                    key: const ValueKey(0), 
+                                    // The end action pane is the one at the right or the bottom side.
+                                    endActionPane: const ActionPane(
+                                      motion: ScrollMotion(),
+                                      children: [
+                                        SlidableAction(
+                                          onPressed: doNothing,
+                                          backgroundColor: Color(0xFFFE4A49),
+                                          foregroundColor: Colors.white,
+                                          icon: Icons.delete,
+                                          label: 'Eliminar',
+                                        ),
+                                        SlidableAction(
+                                          onPressed: doNothing,
+                                          backgroundColor: Color(0xFF21B7CA),
+                                          foregroundColor: Colors.white,
+                                          icon:  Icons.archive,
+                                          label: 'Editar',
+                                        ),
+                                      ],
+                                    ),
+                                  
+                                    child: ListTile(
+                                      title: Container(
+                                        width: size.width * 0.8,
+                                          height: size.height * 0.065,
+                                        decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              border: Border.all(
+                                                  color: const Color.fromARGB(255, 217, 217, 217)),
+                                              borderRadius: const BorderRadius.all(Radius.circular(10))
+                                            ),
+                                        child: Center(child: Text(lstTareas[index].descripcion))
+                                      )
+                                    ),
+                                  );
+                                }
+                              ),
+                            ),
+                          ),
+                          
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-              );
+                  );
             
                 } 
               
@@ -261,7 +225,30 @@ class PrincipalScreenState extends State<PrincipalScreen> with SingleTickerProvi
     );
   }
 
+  void onPressed() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PrincipalScreen(),
+      ),
+    );
+  }
+
+  void onPressedAgregar() async {
+    Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AgregarTareaScreen(),
+          ),
+        );
+  }
+
+
+
 }
+
+
+  
 
 
 void doNothing(BuildContext context) {}

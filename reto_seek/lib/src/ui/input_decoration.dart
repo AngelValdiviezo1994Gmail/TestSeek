@@ -41,7 +41,7 @@ class InputDecorations{
         ),
       ),
       labelText: labelText,
-      labelStyle: TextStyle(color: colorTexto, fontSize: tamanioLetraLabel),
+      labelStyle: TextStyle(color: colorTexto, fontSize: tamanioLetraLabel != null ? tamanioLetraLabel * 0.07 : 0),
       fillColor: colorTexto,
     )
     :
@@ -70,7 +70,7 @@ class InputDecorations{
         ),
       ),
       labelText: labelText,
-      labelStyle: TextStyle(color: colorTexto, fontSize: tamanioLetraLabel),
+      labelStyle: TextStyle(color: colorTexto, fontSize: tamanioLetraLabel != null ? tamanioLetraLabel * 0.07 : 0),
       fillColor: colorTexto,
       prefixIcon: Icon(prefxIcon, color: colorPrefixIcon ?? Colors.white,), 
       suffixIcon: IconButton(icon: Icon(sufixIcon, color: colorPrefixIcon ?? Colors.white, size: varTamanioIcono,), onPressed: varOnPress,),

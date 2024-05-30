@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:reto_seek/src/controllers/controllers.dart';
 import 'package:reto_seek/src/screens/principal_screen.dart';
@@ -10,6 +11,8 @@ import 'package:reto_seek/src/ui/ui.dart';
 final FocusNode _userNode = FocusNode();
 final FocusNode _passwordNode = FocusNode();
 */
+
+const storageAuth = FlutterSecureStorage();
 
 class AuthScreen extends StatefulWidget {
 
@@ -57,20 +60,7 @@ class AuthScreenState extends State<AuthScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                    size: 40.0,
-                  ),
-                  //Todo: Add On Pop Methods Here
-                  onPressed: () {
-                    
-                  },
-                ),
-              ),
+              
               SizedBox(
                 height: height * 0.25,
                 child: FlareActor(
@@ -174,7 +164,7 @@ class AuthScreenState extends State<AuthScreen> {
 
   void onPressed() async {
     if (_email.isEmpty && _password.isEmpty) {
-      _showSnackBar('Please Enter Valid Information');
+      _showSnackBar('Ingrese las credenciales');
       _teddyController.play('fail');
     } else {
       if (_isEmailValid(_email)) {
@@ -184,7 +174,10 @@ class AuthScreenState extends State<AuthScreen> {
           email: _email,
           password: _password,
         );
+        _teddyController.coverEyes(false);
         if (signInSuccess) {
+          
+          storageAuth.write(key: 'TokenAppSeek', value: '123456789');
           _signInSuccess();
         } else {
           _signInFailed();
@@ -229,7 +222,7 @@ class AuthScreenState extends State<AuthScreen> {
   // Todo: implement after sign in fails
   /// Sign in Fails
   void _signInFailed() {
-    _showSnackBar('Your email or password is incorrect');
+    _showSnackBar('Credenciales incorrectas');
     _isLoading = false;
     setState(() {});
   }
