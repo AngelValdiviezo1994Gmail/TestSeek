@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:reto_seek/scale_text_widget.dart';
+import 'package:reto_seek/src/screens/screens.dart';
+import 'package:reto_seek/src/services/services.dart';
 
 class Seek extends StatefulWidget {
 
@@ -34,11 +36,7 @@ class SeekState extends State<Seek> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => MarcacionesService(),//ColorBloc
-          lazy: false,
-        ),
-        ChangeNotifierProvider(
-          create: (_) => AutenticacionService(),
+          create: (_) => TareasServices(),
           lazy: false,
         ),
       ],
@@ -60,14 +58,13 @@ class SeekState extends State<Seek> {
           Locale('es', ''), // Spanish, no country code
         ],
         title: '',
-        initialRoute: CheckAuthScreen.routerName,
+        initialRoute: AuthScreen.routerName,
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: messengerKey,
         routes: {
-          CheckAuthScreen.routerName: (_) => const CheckAuthScreen(),
-          PrincipalScreen.routerName:(_) => PrincipalScreen(),
+          AuthScreen.routerName: (_) => const AuthScreen(),
         },
-        home: PrincipalScreen(objUserEntrada: null ),
+        home: PrincipalScreen(),
         theme: ThemeData(
           primaryColor: Colors.black,
           appBarTheme: const AppBarTheme(
