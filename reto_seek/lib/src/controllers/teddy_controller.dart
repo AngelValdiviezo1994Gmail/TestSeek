@@ -121,7 +121,7 @@ class TeddyController extends FlareControls {
   // Todo: Implement Server side checking of email and password
   Future<bool> checkEmailPassword({required String email, required String password}) async {
     await Future.delayed(const Duration(seconds: 5));
-    if (password == "gaurav" && email == 'gaurav@gmail.com') {
+    if (password == "1234567" && email == 'avaldiviezo@gmail.com') {
       play("success");
       return true;
     } else {

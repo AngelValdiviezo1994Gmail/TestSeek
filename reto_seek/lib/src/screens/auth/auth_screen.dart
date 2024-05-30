@@ -2,8 +2,14 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:reto_seek/src/controllers/controllers.dart';
+import 'package:reto_seek/src/screens/principal_screen.dart';
 import 'package:reto_seek/src/styles/styles.dart';
 import 'package:reto_seek/src/ui/ui.dart';
+
+/*
+final FocusNode _userNode = FocusNode();
+final FocusNode _passwordNode = FocusNode();
+*/
 
 class AuthScreen extends StatefulWidget {
 
@@ -208,14 +214,14 @@ class AuthScreenState extends State<AuthScreen> {
   void _signInSuccess() {
     Future.delayed(const Duration(seconds: 1)).then(
       (_) {
-        /*
+        
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomePage(),
+            builder: (context) => PrincipalScreen(),
           ),
         );
-        */
+        
       },
     );
   }
