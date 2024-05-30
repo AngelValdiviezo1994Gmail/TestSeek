@@ -8,7 +8,10 @@ class ColorState extends Equatable {
   final double radioMarcacion;
   final String formaPago;
   final String localidadId;
-  final String idFormaPago;
+  final String idFormaPago; 
+  final bool tareasTotal;
+  final bool tareasPendientes;
+  final bool tareasCompletas;
 
   const ColorState(
     {
@@ -18,7 +21,10 @@ class ColorState extends Equatable {
       radioMarcacion = 0,
       formaPago = 'C',
       localidadId = '',
-      idFormaPago = ''
+      idFormaPago = '',
+      tareasTotal = true,
+      tareasPendientes = false,
+      tareasCompletas = false
     } 
   ) : positionMenu = positionMenu ?? 0,
       positionFormaPago = positionFormaPago ?? 0,
@@ -26,7 +32,10 @@ class ColorState extends Equatable {
       radioMarcacion = radioMarcacion ?? 0,
       formaPago = formaPago ?? 'C',
       localidadId = localidadId ?? '',
-      idFormaPago = idFormaPago ?? '';
+      idFormaPago = idFormaPago ?? '',
+      tareasTotal = tareasTotal ?? true,
+      tareasPendientes = tareasPendientes ?? false,
+      tareasCompletas = tareasCompletas ?? false;
   
 
   ColorState copyWith({
@@ -36,7 +45,10 @@ class ColorState extends Equatable {
     double? radioMarcacion,
     String? formaPago,
     String? localidadId,
-    String? idFormaPago
+    String? idFormaPago,
+    bool? tareasTotal,
+    bool? tareasPendientes,
+    bool? tareasCompletas
   }) 
   => ColorState(
     positionMenu: positionMenu ?? this.positionMenu,
@@ -45,12 +57,15 @@ class ColorState extends Equatable {
     radioMarcacion: radioMarcacion ?? this.radioMarcacion,
     formaPago: formaPago ?? this.formaPago,
     localidadId: localidadId ?? this.localidadId,
-    idFormaPago: idFormaPago ?? this.idFormaPago
+    idFormaPago: idFormaPago ?? this.idFormaPago,
+    tareasTotal: tareasTotal ?? this.tareasTotal,
+    tareasPendientes: tareasPendientes ?? this.tareasPendientes,
+    tareasCompletas: tareasCompletas ?? this.tareasCompletas
   );
 
 
   @override
-  List<Object> get props => [positionMenu,positionFormaPago,coordenadasMapa,radioMarcacion,formaPago,localidadId,idFormaPago];
+  List<Object> get props => [positionMenu,positionFormaPago,coordenadasMapa,radioMarcacion,formaPago,localidadId,idFormaPago, tareasTotal, tareasPendientes, tareasCompletas];
 
 
   Future<String> waitCarga() async {

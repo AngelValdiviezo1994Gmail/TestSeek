@@ -115,7 +115,8 @@ class AuthScreenState extends State<AuthScreen> {
                             ),
                           ),
                           IconButton(
-                            icon: Icon(_isObscured ? Icons.visibility : Icons.visibility_off,
+                            icon: Icon(
+                              _isObscured ? Icons.visibility : Icons.visibility_off,
                                 color: Colors.black45),
                             onPressed: () {
                               setState(() {
@@ -188,9 +189,7 @@ class AuthScreenState extends State<AuthScreen> {
       }
     }
   }
-
-  //Helper Methods
-  /// Method to validate email id returns true if email is valid
+  
   bool _isEmailValid(String email) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -202,8 +201,6 @@ class AuthScreenState extends State<AuthScreen> {
     }
   }
 
-  // Todo: implement after sign in success
-  ///  Sign in successful
   void _signInSuccess() {
     Future.delayed(const Duration(seconds: 1)).then(
       (_) {
@@ -219,8 +216,6 @@ class AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  // Todo: implement after sign in fails
-  /// Sign in Fails
   void _signInFailed() {
     _showSnackBar('Credenciales incorrectas');
     _isLoading = false;

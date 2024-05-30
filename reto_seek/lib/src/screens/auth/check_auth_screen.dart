@@ -34,8 +34,6 @@ class CheckAuthScreen extends StatelessWidget {
                 } else {
                   if(snapshot.data != '') {
 
-                    if(snapshot.data == 'NV') {
-                    } else {
                       if(snapshot.data == 'NI') {
                         Future.microtask(() => 
                           Navigator.of(context, rootNavigator: true).pushReplacement(
@@ -56,7 +54,6 @@ class CheckAuthScreen extends StatelessWidget {
                         );
                         
                       }
-                    }
                     
                   } else {
                     Future.microtask(() => 

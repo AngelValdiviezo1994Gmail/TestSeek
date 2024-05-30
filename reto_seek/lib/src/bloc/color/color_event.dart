@@ -47,3 +47,18 @@ class OnNewIdFormaPagoEvent extends ColorEvent {
   final String idFormaPago;
   const OnNewIdFormaPagoEvent(this.idFormaPago);
 }
+
+class OnNewtareasTotalEvent extends ColorEvent {
+  final bool tareasTotal;
+  const OnNewtareasTotalEvent(this.tareasTotal);
+}
+
+class OnNewtareasPendientesEvent extends ColorEvent {
+  final bool tareasPendientes;
+  const OnNewtareasPendientesEvent(this.tareasPendientes);
+}
+
+class OnNewtareasCompletasEvent extends ColorEvent {
+  final bool tareasCompletas;
+  const OnNewtareasCompletasEvent(this.tareasCompletas);
+}

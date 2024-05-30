@@ -13,17 +13,22 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
   String formaPago = '';
   String localidadId = '';
   String idFormaPago = '';
+  bool tareasTotal = true;
+  bool tareasPendientes = false;
+  bool tareasCompletas = false;
 
-
-  ColorBloc() : super(const ColorState(positionMenu: 0, positionFormaPago: 0, coordenadasMapa: 0.0, radioMarcacion: 0.0,formaPago: '',localidadId: '', idFormaPago: '')) {
+  ColorBloc() : super(const ColorState(positionMenu: 0, positionFormaPago: 0, coordenadasMapa: 0.0, radioMarcacion: 0.0,formaPago: '',localidadId: '', idFormaPago: '',
+  tareasTotal: true, tareasPendientes: false, tareasCompletas: false)) {
     on<OnNewPositionEvent>(_onReInitPosition);
     on<OnNewCoordenadasPositionEvent>(_onReInitPositionMapa);
     on<OnNewFormaPagoEvent>(_onCambioFormaPago);
     on<OnNewRadioMarcacionEvent>(_onCambioRadio);
-    on<OnNewLocalidadMarcacionEvent>(_onCambioLocalidad);//_onCambioLocalidad
-    on<OnNewIdFormaPagoEvent>(_onCambioIdFormaPago);//_onCambioLocalidad  _onInitPositionFormaPago
-    on<OnNewPositionFormaPagoEvent>(_onInitPositionFormaPago);//_onCambioLocalidad  
-    //_init();
+    on<OnNewLocalidadMarcacionEvent>(_onCambioLocalidad);
+    on<OnNewIdFormaPagoEvent>(_onCambioIdFormaPago);
+    on<OnNewPositionFormaPagoEvent>(_onInitPositionFormaPago);
+    on<OnNewtareasTotalEvent>(_onReInitTareaTotal);
+    on<OnNewtareasPendientesEvent>(_onReInitTareaPendiente);
+    on<OnNewtareasCompletasEvent>(_onReInitTareaCompleta);
   }
 
   Future<void> init() async {
@@ -48,6 +53,21 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
     add(OnNewPositionFormaPagoEvent(
       positionFormaPago
     ));
+  }
+
+  void _onReInitTareaTotal( OnNewtareasTotalEvent event, Emitter<ColorState> emit ) {
+    emit( state.copyWith( tareasTotal: tareasTotal ) );
+
+  }
+
+  void _onReInitTareaPendiente( OnNewtareasPendientesEvent event, Emitter<ColorState> emit ) {
+    emit( state.copyWith( tareasPendientes: tareasPendientes) );
+
+  }
+
+  void _onReInitTareaCompleta( OnNewtareasCompletasEvent event, Emitter<ColorState> emit ) {
+    emit( state.copyWith( tareasCompletas: tareasCompletas ) );
+
   }
 
   void _onReInitPosition( OnNewPositionEvent event, Emitter<ColorState> emit ) {
@@ -118,6 +138,24 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
     idFormaPago = idFormaPagos;
     add(OnNewIdFormaPagoEvent(idFormaPagos));
   }
+
+  void setTareasTotales(bool tareasTotalInp) {
+    tareasTotal = tareasTotalInp;
+    add(OnNewtareasTotalEvent(tareasTotal));
+  }
+
+
+  void setTareasPend(bool tareasPendInp) {
+    tareasPendientes = tareasPendInp;
+    add(OnNewtareasPendientesEvent(tareasPendInp));
+  }
+
+
+  void setTareasCompletas(bool tareasCompInp) {
+    tareasCompletas = tareasCompInp;
+    add(OnNewtareasCompletasEvent(tareasCompInp));
+  }
+
 
   @override
   //ignore: unnecessary_overrides

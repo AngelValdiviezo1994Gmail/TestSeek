@@ -313,7 +313,7 @@ class EditaTareaScreenState extends State<EditaTareaScreen> {
                                               alignment: Alignment.centerLeft,
                                               child: Center(
                                                 child: MSHCheckbox(
-                                                  size: sizeScreen.width * 0.2,
+                                                  size: sizeScreen.width * 0.08,
                                                   value: varTareaCompleta,
                                                   colorConfig: MSHColorConfig.fromCheckedUncheckedDisabled(
                                                     checkedColor: Colors.green,

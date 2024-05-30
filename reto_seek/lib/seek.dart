@@ -58,7 +58,7 @@ class SeekState extends State<Seek> {
           Locale('es', ''), // Spanish, no country code
         ],
         title: '',
-        initialRoute: AuthScreen.routerName,
+        initialRoute: CheckAuthScreen.routerName,
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: messengerKey,
         routes: {
