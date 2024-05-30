@@ -119,9 +119,10 @@ class PrincipalScreenState extends State<PrincipalScreen> with SingleTickerProvi
                                     color: Colors.red,
                                     size: 30.0,
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
                                 
-                                    storagePrincipal.write(key: 'TokenAppSeek', value: '');
+                                    await  storagePrincipal.write(key: 'TokenAppSeek', value: '');
+                                    await storagePrincipal.delete(key: 'TokenAppSeek');
                                 
                                     Navigator.pushReplacement(
                                       context,
